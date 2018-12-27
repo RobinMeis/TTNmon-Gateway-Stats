@@ -25,7 +25,7 @@ class packet:
 
         try:
             self.payload = base64.b64decode(self.json["rxpk"][0]["data"])
-            self.dev_addr = self.payload[1:5].hex()
+            self.dev_addr = self.reverseBytes(self.payload[1:5]).hex()
             self.payload_size = self.json["rxpk"][0]["size"]
             self.frequency = self.json["rxpk"][0]["freq"]
             self.modulation = self.json["rxpk"][0]["modu"]
@@ -48,7 +48,7 @@ class packet:
         if (self.payload[0] == packet.JOIN):
             print("join")
             self.type = "JOIN"
-            self.deveui = self.payload[9:17].hex()
+            self.deveui = self.reverseBytes(self.payload[9:17]).hex()
         elif (self.payload[0] == packet.UPLINK):
             print("uplink")
             self.type = "UPLINK"
@@ -60,3 +60,6 @@ class packet:
         tpayload = payloadSymNb * tsym
         tpacket = tpayload + tpreamble
         self.airtime = tpacket
+
+    def reverseBytes(self, toReverse):
+        retuen bytes(bytearray(toReverse).reverse())
