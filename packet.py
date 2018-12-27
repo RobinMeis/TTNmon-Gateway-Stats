@@ -1,5 +1,6 @@
 import json
 import base64
+import re
 
 class packet:
     JOIN = 0x00
@@ -34,6 +35,10 @@ class packet:
             self.deveui = None
         except KeyError:
             return
+
+        dr = re.findall("SF(\d{1,2})BW(\d{3})", self.dr)
+        self.SF = dr[0][0]
+        self.BW = dr[0][1]
 
         if (self.payload[0] == packet.JOIN):
             print("join")
