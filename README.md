@@ -1,14 +1,13 @@
 # TTNmon-Gateway-Stats
 A packet collector and forwarder to create RX stats of a gateway for TTNmon.meis.space
 
-THIS TOOL IS CURRENTLY UNDER HEAVY DEVELOPMENT. IT IS EXPECTED TO BE WORKING BY 28.12.2018
-
 ## Requirements
 - Semtech UDP Forwarder
 - Python3
 - python-requests
 
 ## Setup
+``apt install python-requests``
 TODO
 
 ## Based on
