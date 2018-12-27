@@ -60,11 +60,11 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
                 "channel": pkt.channel,
                 "rssi": pkt.rssi,
                 "deveui": pkt.deveui,
-                "cr_k": pkt.codr[0],
-                "cr_n": pkt.codr[1],
+                "cr_k": pkt.cr_k,
+                "cr_n": pkt.cr_n,
                 "SF": pkt.SF,
                 "BW": pkt.BW,
-                "airtime": "todo"
+                "airtime": pkt.airtime
             })
             n += 1
 

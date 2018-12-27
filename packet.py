@@ -1,6 +1,7 @@
 import json
 import base64
 import re
+import math
 
 class packet:
     JOIN = 0x00
@@ -17,6 +18,7 @@ class packet:
         self.random_token = data[1:3]
         self.identifier = data[3]
         self.gateway_addr = data[4:12].hex()
+        self.airtime = None
 
         self.json = json.loads(data[12:len(self.data)].decode())
 
@@ -32,14 +34,16 @@ class packet:
             self.dr = self.json["rxpk"][0]["datr"]
             self.rssi = self.json["rxpk"][0]["rssi"]
             self.codr = self.json["rxpk"][0]["codr"].split("/")
+            self.cr_k = int(self.codr[0])
+            self.cr_n = int(self.codr[1])
             self.deveui = None
         except KeyError:
             return
 
         dr = re.findall("SF(\d{1,2})BW(\d{3})", self.dr)
-        self.SF = dr[0][0]
-        self.BW = dr[0][1]
-
+        self.SF = int(dr[0][0])
+        self.BW = int(dr[0][1])
+        self.calcAirtime()
         if (self.payload[0] == packet.JOIN):
             print("join")
             self.type = "JOIN"
@@ -47,3 +51,11 @@ class packet:
         elif (self.payload[0] == packet.UPLINK):
             print("uplink")
             self.type = "UPLINK"
+
+    def calcAirtime(self):
+        tsym = (pow(2,self.SF) / (self.BW * 1000)) * 1000
+        tpreamble = (8 + 4.25) * tsym
+        payloadSymNb = 8+(max(math.ceil((8*self.payload_size-4*self.SF+28+16-20*(1-1))/(4*(self.SF-2*0)))*(self.cr_n),0))
+        tpayload = payloadSymNb * tsym
+        tpacket = tpayload + tpreamble
+        self.airtime = tpacket
