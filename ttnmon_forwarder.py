@@ -13,4 +13,4 @@ packet_handler.startThread()
 while True:
     data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
     pkt = packet(data)
-    ttnmon.add(pkt)
+    packet_handler.add(pkt)
