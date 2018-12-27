@@ -62,4 +62,6 @@ class packet:
         self.airtime = tpacket
 
     def reverseBytes(self, toReverse):
-        return bytes(bytearray(toReverse).reverse())
+        array = bytearray(toReverse)
+        array.reverse()
+        return bytes(array)
