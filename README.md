@@ -7,7 +7,7 @@ A packet collector and forwarder to create RX stats of a gateway for TTNmon.meis
 - python-requests
 
 ## Setup
-``apt install python-requests``
+``apt install python3 python3-requests``
 TODO
 
 ## Based on
