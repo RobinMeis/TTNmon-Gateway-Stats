@@ -8,6 +8,7 @@ A packet collector and forwarder to create RX stats of a gateway for TTNmon.meis
 
 ## Setup
 ``apt install python3 python3-requests``
+``python3 ttnmon_forwarder.py``
 TODO
 
 ## Based on
