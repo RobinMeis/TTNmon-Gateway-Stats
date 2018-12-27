@@ -30,8 +30,8 @@ class packet:
             self.channel = self.json["rxpk"][0]["chan"]
             self.dr = self.json["rxpk"][0]["datr"]
             self.rssi = self.json["rxpk"][0]["rssi"]
+            self.codr = self.json["rxpk"][0]["codr"].split("/")
             self.deveui = None
-
         except KeyError:
             return
 

@@ -60,7 +60,9 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
                 "channel": pkt.channel,
                 "dr": pkt.dr,
                 "rssi": pkt.rssi,
-                "deveui": pkt.deveui
+                "deveui": pkt.deveui,
+                "cr_k": pkt.codr[0],
+                "cr_n": pkt.codr[1]
             })
             n += 1
 
