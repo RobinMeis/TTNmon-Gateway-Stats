@@ -18,6 +18,7 @@ class packet:
         self.random_token = data[1:3]
         self.identifier = data[3]
         self.gateway_addr = data[4:12].hex()
+        self.gateway_id = "eui-%s" % (self.gateway_addr,)
         self.airtime = None
 
         self.json = json.loads(data[12:len(self.data)].decode())
