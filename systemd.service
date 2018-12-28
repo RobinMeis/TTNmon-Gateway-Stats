@@ -1,0 +1,12 @@
+[Unit]
+Description=TTNmon Gateway Stats collector and forwarder
+After=multi-user.target
+
+[Service]
+User=ttnmon
+Type=idle
+ExecStart=/usr/bin/python3 /opt/TTNmon-Gateway-Stats/ttnmon_forwarder.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
