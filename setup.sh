@@ -46,7 +46,7 @@ printf "Done.\n"
 printf "Do you want to use the beta branch? Keep in mind that beta branches might break on update. Do not use for unattended installations!"
 read -r -p "Use beta branch? [y/N] " response
 printf "Going to clone TTNmon into /opt"
-if [[ "$response" =~ ^([yY])+$ ]]
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
 then
   git clone https://github.com/RobinMeis/TTNmon-Gateway-Stats.git --branch beta /opt/TTNmon-Gateway-Stats
 else
@@ -63,7 +63,7 @@ fi
 
 printf "You might want to install a systemd service for autostarting"
 read -r -p "Install systemd service? [Y/n] " response
-if [[ "$response" =~ ^([nN])+$ ]]
+if [[ "$response" =~ ^([nN][eE][sS]|[nN])+$ ]]
 then
   printf "Okay, it's up to you!\n"
 else
@@ -100,7 +100,7 @@ else
 
     printf "Do you want to enable autostart for TTNmon Gateway Stats?"
     read -r -p "Enable autostart? Y/n] " response
-    if [[ "$response" =~ ^([nN])+$ ]]
+    if [[ "$response" =~ ^([nN][eE][sS]|[nN])+$ ]]
     then
       printf "Okay, it's up to you!\n"
     else
@@ -115,7 +115,7 @@ else
 
     printf "Do you want to enable autostart TTNmon Gateway Stats?"
     read -r -p "Enable autostart? [Y/n] " response
-    if [[ "$response" =~ ^([nN])+$ ]]
+    if [[ "$response" =~ ^([nN][eE][sS]|[nN])+$ ]]
     then
       printf "Okay, it's up to you!\n"
     else
@@ -128,7 +128,7 @@ fi
 #Configure local forwarder automagically
 printf "Do you want to configure your local forwarder automatically? This does only work for /opt/ttn-forwarder. A backup of your current configuration will be created"
 read -r -p "Configure forwarder? [y/N] " response
-if [[ "$response" =~ ^([yY])+$ ]]
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
 then
   cp /opt/ttn-gateway/bin/local_conf.json /opt/ttn-gateway/bin/local_conf.json-backup #Create backup
   /usr/bin/python3 /opt/TTNmon-Gateway-Stats/configure-polyforwarder.py #Adjust configuration
