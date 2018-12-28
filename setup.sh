@@ -88,10 +88,10 @@ then
     rm /etc/systemd/system/TTNmon-Gateway-Stats.service
     systemctl daemon-reload
     if [ $retVal -ne 0 ]; then #Check if rollback fixed problem
-      printf "Whoops, systemd reload after rolling back failed. You might have serious problems now which I can't solve. Sorry."
+      printf "\nWhoops, systemd reload after rolling back failed. You might have serious problems now which I can't solve. Sorry."
       exit
     else
-      printf "Mhhh. Rollback and systemd reload fixed the issue. Service was not installed successfully. However TTNmon Gateway Stats was successfully installed and can be started using\n   python3 /opt/TTNmon-Gateway-Stats/ttnmon_forwarder.py\nI'm sorry I can't suppprt you by creating a systemd service."
+      printf "\nMhhh. Rollback and systemd reload fixed the issue. Service was not installed successfully. However TTNmon Gateway Stats was successfully installed and can be started using\n   python3 /opt/TTNmon-Gateway-Stats/ttnmon_forwarder.py\nI'm sorry I can't suppprt you by creating a systemd service.\n"
     fi
   else #service installation worked. Let's start and/or enable it...
     printf "Done.\n"
@@ -125,4 +125,4 @@ else
   printf "Okay, it's up to you!\n"
 fi
 
-printf "Installation was successful. Have a nice day and thank you for sharing your data.\n"
+printf "Installation finished. Have a nice day and thank you for sharing your data.\n"
