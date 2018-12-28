@@ -9,7 +9,7 @@ A packet collector and forwarder to create RX stats of a gateway for TTNmon.meis
 ## Setup
 You can either perform an automated setup or do it step by step on your own.
 ### Automated please!
-Okay, first of all run
+Okay, just run
 
 ``bash <(curl -s https://raw.githubusercontent.com/RobinMeis/TTNmon-Gateway-Stats/master/setup.sh)``
 
