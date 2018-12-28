@@ -5,6 +5,7 @@ After=multi-user.target
 [Service]
 User=ttnmon
 Type=idle
+WorkingDirectory=/opt/TTNmon-Gateway-Stats
 ExecStart=/usr/bin/python3 /opt/TTNmon-Gateway-Stats/ttnmon_forwarder.py
 Restart=on-failure
 
