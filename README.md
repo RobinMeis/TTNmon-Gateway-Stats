@@ -13,7 +13,7 @@ Okay, first of all run
 
 ``curl -s https://raw.githubusercontent.com/RobinMeis/TTNmon-Gateway-Stats/master/setup.sh | bash``
 
-Make sure to run it as root or running it using a user in sudoers group. The script will ask for your sudo password automatically if not running as root. Make sure to run this script on a Debian/Raspbian system. For other distributions adapt manual installations instructions.
+Make sure to run it as root or running it using a user in sudoers group. The script will ask for your sudo password automatically if not running as root. Make sure to run this script on a Debian/Raspbian system. For other distributions adapt manual setup instructions below.
 
 ### Manual Setup
 Assuming you are using a Debian like Distro. Otherwise you might need to adapt some commands.
@@ -30,9 +30,9 @@ Now you can run
 
 ``python3 ttnmon_forwarder.py``
 
-The file `systemd.service` contains a service template for use with systemd. Please make sure to adjust the script patch and create / change the ttnmon user. Finally follow the instructions provided below for Polyforwarder Setup.
+The file `systemd.service` contains a service template for use with systemd. Please make sure to adjust the script path and create / change the ttnmon user. Finally follow the instructions provided below for Polyforwarder Setup.
 
-#### Polyforwarder settings
+#### Polyforwarder Setup
 Now you have to configure your existing UDP Forwarder to forward packets to TTNmon Gateway Stats beside to TTN or other networks. It might be located in `nano /opt/ttn-gateway/bin/local_conf.json`.
 
 You should have a line like the following:
