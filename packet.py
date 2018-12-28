@@ -41,6 +41,7 @@ class packet:
             self.fcrtl = int.from_bytes(self.payload[5:6], byteorder='big')
             self.adr = bool(self.fcrtl & 0x80)
             self.ack = bool(self.fcrtl & 0x20)
+            self.fport = int.from_bytes(self.payload[8:9], byteorder='big')
             self.deveui = None
         except KeyError:
             return

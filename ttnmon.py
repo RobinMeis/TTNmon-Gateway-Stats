@@ -69,6 +69,7 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
                     "ack": pkt.ack,
                     "SF": pkt.SF,
                     "BW": pkt.BW,
+                    "fport": pkt.fport,
                     "airtime": pkt.airtime,
                     "gtw_addr": pkt.gateway_addr,
                     "gtw_id": pkt.gateway_id,
