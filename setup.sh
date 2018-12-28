@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $1 = "escalated" ]; then #Welcome message only once, do not show on successful escalation
+if [ -z "$1" ]; then #Welcome message only once, do not show on successful escalation
   echo '  _______ _______ _   _                       ';
   echo ' |__   __|__   __| \ | |                      ';
   echo '    | |     | |  |  \| |_ __ ___   ___  _ __  ';
