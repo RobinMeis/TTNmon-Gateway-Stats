@@ -62,9 +62,11 @@ else
 fi
 
 printf "You might want to install a systemd service for autostarting"
-read -r -p "Install systemd service? [y/N] " response
-if [[ "$response" =~ ^([yY])+$ ]]
+read -r -p "Install systemd service? [Y/n] " response
+if [[ "$response" =~ ^([nN])+$ ]]
 then
+  printf "Okay, it's up to you!\n"
+else
   #Copy service file
   cp /opt/TTNmon-Gateway-Stats/systemd.service /etc/systemd/system/TTNmon-Gateway-Stats.service
   if [ $retVal -ne 0 ]; then #Check if copy worked
@@ -97,9 +99,11 @@ then
     printf "Done.\n"
 
     printf "Do you want to enable autostart for TTNmon Gateway Stats?"
-    read -r -p "Enable autostart? [y/N] " response
-    if [[ "$response" =~ ^([yY])+$ ]]
+    read -r -p "Enable autostart? Y/n] " response
+    if [[ "$response" =~ ^([nN])+$ ]]
     then
+      printf "Okay, it's up to you!\n"
+    else
       systemctl enable TTNmon-Gateway-Stats.service
       if [ $retVal -ne 0 ]; then #Check if enable worked
         printf "Whoops, that failed. Please have a look for TTNmon-Gateway-Stats.service. Exiting."
@@ -107,22 +111,18 @@ then
       else
         printf "Done.\n"
       fi
-    else
-        printf "Okay, it's up to you!\n"
     fi
 
-    printf "Do you want to start TTNmon Gateway Stats?"
-    read -r -p "Enable autostart? [y/N] " response
-    if [[ "$response" =~ ^([yY])+$ ]]
+    printf "Do you want to enable autostart TTNmon Gateway Stats?"
+    read -r -p "Enable autostart? [Y/n] " response
+    if [[ "$response" =~ ^([nN])+$ ]]
     then
+      printf "Okay, it's up to you!\n"
+    else
       systemctl start TTNmon-Gateway-Stats.service
       printf "Done.\n"
-    else
-        printf "Okay, it's up to you!\n"
     fi
   fi
-else
-  printf "Okay, it's up to you!\n"
 fi
 
 #Configure local forwarder automagically
