@@ -11,7 +11,7 @@ You can either perform an automated setup or do it step by step on your own.
 ### Automated please!
 Okay, first of all run
 
-``curl -s https://raw.githubusercontent.com/RobinMeis/TTNmon-Gateway-Stats/master/setup.sh | bash``
+``bash <(curl -s https://raw.githubusercontent.com/RobinMeis/TTNmon-Gateway-Stats/master/setup.sh)``
 
 Make sure to run it as root or running it using a user in sudoers group. The script will ask for your sudo password automatically if not running as root. Make sure to run this script on a Debian/Raspbian system. For other distributions adapt manual setup instructions below.
 
