@@ -127,9 +127,11 @@ fi
 
 #Configure local forwarder automagically
 printf "Do you want to configure your local forwarder automatically? This does only work for /opt/ttn-forwarder. A backup of your current configuration will be created\n"
-read -r -p "Configure forwarder? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+read -r -p "Configure forwarder? [Y/n] " response
+if [[ "$response" =~ ^([nN][eE][sS]|[nN])+$ ]]
 then
+  printf "Okay, it's up to you! Please follow the instructions for manual configuration at https://github.com/RobinMeis/TTNmon-Gateway-Stats#polyforwarder-setup\n"
+else
   cp /opt/ttn-gateway/bin/local_conf.json /opt/ttn-gateway/bin/local_conf.json-backup #Create backup
   /usr/bin/python3 /opt/TTNmon-Gateway-Stats/configure-polyforwarder.py #Adjust configuration
   if [ $retVal -ne 0 ]; then #Check if configuration worked
@@ -142,8 +144,6 @@ then
       printf "Done.\n"
     fi
   fi
-else
-  printf "Okay, it's up to you! Please follow the instructions for manual configuration at https://github.com/RobinMeis/TTNmon-Gateway-Stats#polyforwarder-setup\n"
 fi
 
 printf "Installation finished. Have a nice day and thank you for sharing your data.\n"
