@@ -51,6 +51,9 @@ Restart your TTN Forwarder:
 
 ``systemctl restart ttn-forwarder``
 
+## Update
+You can use update.sh to perform updates. This script requires you to have the TTNmon-Gateway-Stats service available in systemd. You might use this script for auto-updates.
+
 ## Removal
 It's sad to see you leave. However anything you need is in uninstall.sh. You only need to remove the corresponding server entry from your forwarder.
 
