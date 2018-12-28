@@ -43,23 +43,6 @@ if [ $retVal -ne 0 ]; then #Check if apt worked
 fi
 echo "Done.\n"
 
-echo "You might want to use the auto updater. In this case we will need to install python3-git. Do you want to install?"
-read -r -p "Install python3-git? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
-then
-  echo "I will install python3-git. Please be patient."
-  apt install --assume-yes python3-git
-  retVal=$?
-  if [ $retVal -ne 0 ]; then #Check if apt worked
-    echo "Whoops, that failed. Are on Debian/Raspbian? Exiting."
-    exit
-  else
-    echo "Done.\n"
-  fi
-else
-    echo "Okay, it's up to you!\n"
-fi
-
 echo "Do you want to use the beta branch? Keep in mind that beta branches might break on update. Do not use for unattended installations!"
 read -r -p "Use beta branch? [y/N] " response
 echo "Going to clone TTNmon into /opt"
