@@ -29,9 +29,6 @@ if (( $EUID != 0 )); then #If not root, try to become root
     fi
 
     exit
-elif [ -z "$1" ]; then
-  /tmp/setup-ttnmon_forwarder.sh escalated #Escalate to allow keybord inputs
-  exit
 fi
 
 echo "Great, I got root! Now we will perform a quick setup"
