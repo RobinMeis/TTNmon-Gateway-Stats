@@ -118,11 +118,32 @@ then
       systemctl start TTNmon-Gateway-Stats.service
       printf "Done.\n"
     else
-        printf "Okay, it's up to you!"
+        printf "Okay, it's up to you!\n"
     fi
   fi
 else
   printf "Okay, it's up to you!\n"
+fi
+
+#Configure local forwarder automagically
+printf "Do you want to configure your local forwarder automatically? This does only work for /opt/ttn-forwarder. A backup of your current configuration will be created"
+read -r -p "Configure forwarder? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+then
+  cp /opt/ttn-gateway/bin/local_conf.json /opt/ttn-gateway/bin/local_conf.json-backup #Create backup
+  /usr/bin/python3 /opt/TTNmon-Gateway-Stats/configure-polyforwarder.py #Adjust configuration
+  if [ $retVal -ne 0 ]; then #Check if configuration worked
+    printf "Whoops, that failed. Please follow the instructions for manual configuration at https://github.com/RobinMeis/TTNmon-Gateway-Stats#polyforwarder-setup\n"
+  else
+    systemctl restart ttn-forwarder #Check if ttn-forwarder starts with new configuration
+    if [ $retVal -ne 0 ]; then
+      printf "Auto configuration worked but restarting ttn-forwarder.service failed. Please check your /opt/ttn-gateway/bin/local_conf.json"
+    else
+      printf "Done.\n"
+    fi
+  fi
+else
+  printf "Okay, it's up to you! Please follow the instructions for manual configuration at https://github.com/RobinMeis/TTNmon-Gateway-Stats#polyforwarder-setup\n"
 fi
 
 printf "Installation finished. Have a nice day and thank you for sharing your data.\n"
