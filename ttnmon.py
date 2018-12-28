@@ -5,13 +5,14 @@ import queue
 import requests
 
 class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
-    def __init__(self, upload_interval=60, url="https://api.ttnmon.meis.space/gateways/ttnmon_forwarder/"):
+    def __init__(self, mailto, upload_interval=60, url="https://api.ttnmon.meis.space/gateways/ttnmon_forwarder/"):
         self.upload_interval = upload_interval
         self.url = url
         self.packets = queue.Queue()
         self.thread = None
         self.runThread = False
         self.version = "0.1"
+        self.mailto = mailto
 
     def add(self, pkt): #Adds a packet for uploading
         if pkt.type == "JOIN" or pkt.type == "UPLINK":
@@ -48,6 +49,7 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
         if len(packets) > 0:
             data = {}
             data["version"] = self.version
+            data["mailto"] = self.mailto
             data["pkts"] = []
             for pkt in packets:
                 data["pkts"].append ({

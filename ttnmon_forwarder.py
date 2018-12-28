@@ -5,9 +5,12 @@ import socket
 UDP_IP = "127.0.0.1"
 UDP_PORT = 1700
 
+with open("mailto.txt") as mail:
+    mailto = mail.read()
+
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((UDP_IP, UDP_PORT))
-packet_handler = ttnmon()
+packet_handler = ttnmon(mailto)
 packet_handler.startThread()
 
 while True:
