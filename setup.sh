@@ -46,7 +46,7 @@ printf "Done.\n"
 printf "Do you want to use the beta branch? Keep in mind that beta branches might break on update. Do not use for unattended installations!"
 read -r -p "Use beta branch? [y/N] " response
 printf "Going to clone TTNmon into /opt"
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+if [[ "$response" =~ ^([yY])+$ ]]
 then
   git clone https://github.com/RobinMeis/TTNmon-Gateway-Stats.git --branch beta /opt/TTNmon-Gateway-Stats
 else
@@ -63,7 +63,7 @@ fi
 
 printf "You might want to install a systemd service for autostarting"
 read -r -p "Install systemd service? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+if [[ "$response" =~ ^([yY])+$ ]]
 then
   #Copy service file
   cp /opt/TTNmon-Gateway-Stats/systemd.service /etc/systemd/system/TTNmon-Gateway-Stats.service
@@ -98,7 +98,7 @@ then
 
     printf "Do you want to enable autostart for TTNmon Gateway Stats?"
     read -r -p "Enable autostart? [y/N] " response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+    if [[ "$response" =~ ^([yY])+$ ]]
     then
       systemctl enable TTNmon-Gateway-Stats.service
       if [ $retVal -ne 0 ]; then #Check if enable worked
@@ -113,7 +113,7 @@ then
 
     printf "Do you want to start TTNmon Gateway Stats?"
     read -r -p "Enable autostart? [y/N] " response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+    if [[ "$response" =~ ^([yY])+$ ]]
     then
       systemctl start TTNmon-Gateway-Stats.service
       printf "Done.\n"
@@ -128,7 +128,7 @@ fi
 #Configure local forwarder automagically
 printf "Do you want to configure your local forwarder automatically? This does only work for /opt/ttn-forwarder. A backup of your current configuration will be created"
 read -r -p "Configure forwarder? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+if [[ "$response" =~ ^([yY])+$ ]]
 then
   cp /opt/ttn-gateway/bin/local_conf.json /opt/ttn-gateway/bin/local_conf.json-backup #Create backup
   /usr/bin/python3 /opt/TTNmon-Gateway-Stats/configure-polyforwarder.py #Adjust configuration
