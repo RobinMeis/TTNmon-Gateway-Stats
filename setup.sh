@@ -61,6 +61,7 @@ else
   printf "Done.\n"
 fi
 
+#Ask for mail address
 printf "You can specify an email address for updates and technical information about your gateway. Leave empty if you don't want any emails\n"
 read -r -p "Email: " response
 echo $response > /opt/TTNmon-Gateway-Stats/mailto.txt
