@@ -38,6 +38,9 @@ class packet:
             self.cr_k = int(self.codr[0])
             self.cr_n = int(self.codr[1])
             self.fcount = int.from_bytes(self.payload[6:8], byteorder='little')
+            self.fcrtl = int.from_bytes(self.payload[5:6], byteorder='big')
+            self.adr = bool(self.fcrtl & 0x80)
+            self.ack = bool(self.fcrtl & 0x20)
             self.deveui = None
         except KeyError:
             return

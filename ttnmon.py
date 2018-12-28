@@ -65,6 +65,8 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
                     "deveui": pkt.deveui,
                     "cr_k": pkt.cr_k,
                     "cr_n": pkt.cr_n,
+                    "adr": pkt.adr,
+                    "ack": pkt.ack,
                     "SF": pkt.SF,
                     "BW": pkt.BW,
                     "airtime": pkt.airtime,
