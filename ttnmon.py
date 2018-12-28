@@ -11,6 +11,7 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
         self.packets = queue.Queue()
         self.thread = None
         self.runThread = False
+        self.version = "0.1"
 
     def add(self, pkt): #Adds a packet for uploading
         if pkt.type == "JOIN" or pkt.type == "UPLINK":
@@ -45,9 +46,11 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
 
     def upload(self, packets):
         if len(packets) > 0:
-            data = []
+            data = {}
+            data["version"] = self.version
+            data["pkts"] = []
             for pkt in packets:
-                data.append ({
+                data["pkts"].append ({
                     "type": pkt.type,
                     "dev_addr": pkt.dev_addr,
                     "payload_size": pkt.payload_size,
