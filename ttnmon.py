@@ -14,7 +14,6 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
 
     def add(self, pkt): #Adds a packet for uploading
         if pkt.type == "JOIN" or pkt.type == "UPLINK":
-            print("RCV!")
             self.packets.put(pkt)
 
     def startThread(self): #Start the background task

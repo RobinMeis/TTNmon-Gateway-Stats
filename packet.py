@@ -46,11 +46,9 @@ class packet:
         self.BW = int(dr[0][1])
         self.calcAirtime()
         if (self.payload[0] == packet.JOIN):
-            print("join")
             self.type = "JOIN"
             self.deveui = self.reverseBytes(self.payload[9:17]).hex()
         elif (self.payload[0] == packet.UPLINK):
-            print("uplink")
             self.type = "UPLINK"
 
     def calcAirtime(self):
