@@ -29,6 +29,9 @@ if (( $EUID != 0 )); then #If not root, try to become root
     fi
 
     exit
+else
+  /tmp/setup-ttnmon_forwarder.sh escalated #Escalate to allow keybord inputs
+  exit
 fi
 
 printf "Great, I got root! Now we will perform a quick setup"
@@ -43,7 +46,7 @@ if [ $retVal -ne 0 ]; then #Check if apt worked
 fi
 printf "Done.\n"
 
-printf "Do you want to use the beta branch? Keep in mind that beta branches might break on update. Do not use for unattended installations!"
+printf "Do you want to use the beta branch? Keep in mind that beta branches might break on update. Do not use for unattended installations!\n"
 read -r -p "Use beta branch? [y/N] " response
 printf "Going to clone TTNmon into /opt"
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
@@ -61,7 +64,7 @@ else
   printf "Done.\n"
 fi
 
-printf "You might want to install a systemd service for autostarting"
+printf "You might want to install a systemd service for autostarting\n"
 read -r -p "Install systemd service? [Y/n] " response
 if [[ "$response" =~ ^([nN][eE][sS]|[nN])+$ ]]
 then
@@ -98,8 +101,8 @@ else
   else #service installation worked. Let's start and/or enable it...
     printf "Done.\n"
 
-    printf "Do you want to enable autostart for TTNmon Gateway Stats?"
-    read -r -p "Enable autostart? Y/n] " response
+    printf "Do you want to enable autostart for TTNmon Gateway Stats?\n"
+    read -r -p "Enable autostart? [Y/n] " response
     if [[ "$response" =~ ^([nN][eE][sS]|[nN])+$ ]]
     then
       printf "Okay, it's up to you!\n"
@@ -113,8 +116,8 @@ else
       fi
     fi
 
-    printf "Do you want to enable autostart TTNmon Gateway Stats?"
-    read -r -p "Enable autostart? [Y/n] " response
+    printf "Do you want to start TTNmon Gateway Stats now?"
+    read -r -p "Start TTNmon Gateway Stats? [Y/n] " response
     if [[ "$response" =~ ^([nN][eE][sS]|[nN])+$ ]]
     then
       printf "Okay, it's up to you!\n"
@@ -126,7 +129,7 @@ else
 fi
 
 #Configure local forwarder automagically
-printf "Do you want to configure your local forwarder automatically? This does only work for /opt/ttn-forwarder. A backup of your current configuration will be created"
+printf "Do you want to configure your local forwarder automatically? This does only work for /opt/ttn-forwarder. A backup of your current configuration will be created\n"
 read -r -p "Configure forwarder? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
 then
@@ -135,7 +138,7 @@ then
   if [ $retVal -ne 0 ]; then #Check if configuration worked
     printf "Whoops, that failed. Please follow the instructions for manual configuration at https://github.com/RobinMeis/TTNmon-Gateway-Stats#polyforwarder-setup\n"
   else
-    systemctl restart ttn-forwarder #Check if ttn-forwarder starts with new configuration
+    systemctl restart ttn-gateway #Check if ttn-forwarder starts with new configuration
     if [ $retVal -ne 0 ]; then
       printf "Auto configuration worked but restarting ttn-forwarder.service failed. Please check your /opt/ttn-gateway/bin/local_conf.json"
     else
