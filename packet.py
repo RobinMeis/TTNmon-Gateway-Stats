@@ -37,6 +37,7 @@ class packet:
             self.codr = self.json["rxpk"][0]["codr"].split("/")
             self.cr_k = int(self.codr[0])
             self.cr_n = int(self.codr[1])
+            self.fcount = int.from_bytes(self.payload[6:8], byteorder='little')
             self.deveui = None
         except KeyError:
             return

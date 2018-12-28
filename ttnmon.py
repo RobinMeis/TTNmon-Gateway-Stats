@@ -64,7 +64,8 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
                     "BW": pkt.BW,
                     "airtime": pkt.airtime,
                     "gtw_addr": pkt.gateway_addr,
-                    "gtw_id": pkt.gateway_id
+                    "gtw_id": pkt.gateway_id,
+                    "fcount": pkt.fcount
                 })
 
             try:
