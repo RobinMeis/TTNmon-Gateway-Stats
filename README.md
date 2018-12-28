@@ -51,6 +51,9 @@ Restart your TTN Forwarder:
 
 ``systemctl restart ttn-forwarder``
 
+## Removal
+It's sad to see you leave. However anything you need is in uninstall.sh. You only need to remove the corresponding server entry from your forwarder.
+
 ## Based on
 - https://docs.google.com/spreadsheets/d/1voGAtQAjC1qBmaVuP1ApNKs1ekgUjavHuVQIXyYSvNc/edit#gid=0
 - https://github.com/gonzalocasas/Specifications/blob/master/docs/semtech.md
