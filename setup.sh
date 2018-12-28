@@ -10,12 +10,12 @@ if [ -z "$1" ]; then #Welcome message only once, do not show on successful escal
   echo '                                              ';
   echo '                                              ';
 
-  echo "Hello, my name is TTNmon. I will guide you through the installation of the TTNmon Gateway Stats collector"
-  echo "First of all I will make sure you gave me root access"
+  printf "Hello, my name is TTNmon. I will guide you through the installation of the TTNmon Gateway Stats collector"
+  printf "First of all I will make sure you gave me root access"
 fi
 
 if (( $EUID != 0 )); then #If not root, try to become root
-    echo "Okay, I'm currently not running as root. I will try to sudo myself. Can you enter your sudo password?"
+    printf "Okay, I'm currently not running as root. I will try to sudo myself. Can you enter your sudo password?"
 
      #As we can't sudo /dev/stdin, we will download script to /tmp and run from there
     rm /tmp/setup-ttnmon_forwarder.sh
@@ -25,27 +25,27 @@ if (( $EUID != 0 )); then #If not root, try to become root
 
     retVal=$?
     if [ $retVal -ne 0 ]; then #Check if sudo worked
-      echo "Oh, that's bad. sudo failed. Please start me with root permissions!"
+      printf "Oh, that's bad. sudo failed. Please start me with root permissions!"
     fi
 
     exit
 fi
 
-echo "Great, I got root! Now we will perform a quick setup"
+printf "Great, I got root! Now we will perform a quick setup"
 
 #Install git, python3 and python3-requests
-echo "I will install git, python3 and python3-requests. Please be patient."
+printf "I will install git, python3 and python3-requests. Please be patient."
 apt install --assume-yes git python3 python3-requests
 retVal=$?
 if [ $retVal -ne 0 ]; then #Check if apt worked
-  echo "Whoops, that failed. Are on Debian/Raspbian? Exiting."
+  printf "Whoops, that failed. Are on Debian/Raspbian? Exiting."
   exit
 fi
-echo "Done.\n"
+printf "Done.\n"
 
-echo "Do you want to use the beta branch? Keep in mind that beta branches might break on update. Do not use for unattended installations!"
+printf "Do you want to use the beta branch? Keep in mind that beta branches might break on update. Do not use for unattended installations!"
 read -r -p "Use beta branch? [y/N] " response
-echo "Going to clone TTNmon into /opt"
+printf "Going to clone TTNmon into /opt"
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
 then
   git clone https://github.com/RobinMeis/TTNmon-Gateway-Stats.git --branch beta /opt/TTNmon-Gateway-Stats
@@ -55,74 +55,74 @@ fi
 
 retVal=$?
 if [ $retVal -ne 0 ]; then #Check if clone worked
-  echo "Whoops, that failed. Exiting."
+  printf "Whoops, that failed. Exiting."
   exit
 else
-  echo "Done.\n"
+  printf "Done.\n"
 fi
 
-echo "You might want to install a systemd service for autostarting"
+printf "You might want to install a systemd service for autostarting"
 read -r -p "Install systemd service? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
 then
   #Copy service file
   cp /opt/TTNmon-Gateway-Stats/systemd.service /etc/systemd/system/TTNmon-Gateway-Stats.service
   if [ $retVal -ne 0 ]; then #Check if copy worked
-    echo "Mhhh. Copying service file failed. Service was not installed successfully. However TTNmon Gateway Stats was successfully installed and can be started using\n   python3 /opt/TTNmon-Gateway-Stats/ttnmon_forwarder.py\nI'm sorry I can't suppprt you by creating a systemd service."
+    printf "Mhhh. Copying service file failed. Service was not installed successfully. However TTNmon Gateway Stats was successfully installed and can be started using\n   python3 /opt/TTNmon-Gateway-Stats/ttnmon_forwarder.py\nI'm sorry I can't suppprt you by creating a systemd service."
     exit
   fi
 
   #Create ttnmon user
-  echo "Creating and configuring user"
+  printf "Creating and configuring user"
   useradd -M -N -r -s /bin/false ttnmon
   if [ $retVal -ne 0 ]; then #Check if creating user worked
-    echo "Mhhh. Creating user ttnmon failed. Service was not installed successfully. However TTNmon Gateway Stats was successfully installed and can be started using\n   python3 /opt/TTNmon-Gateway-Stats/ttnmon_forwarder.py\nI'm sorry I can't suppprt you by creating a systemd service."
+    printf "Mhhh. Creating user ttnmon failed. Service was not installed successfully. However TTNmon Gateway Stats was successfully installed and can be started using\n   python3 /opt/TTNmon-Gateway-Stats/ttnmon_forwarder.py\nI'm sorry I can't suppprt you by creating a systemd service."
     exit
   fi
 
   #Reloading systemctl
   systemctl daemon-reload
   if [ $retVal -ne 0 ]; then #Check if reload worked. If not undo all changes related to systemd
-    echo "Whoops, reloading systemd failed. I will rollback."
+    printf "Whoops, reloading systemd failed. I will rollback."
     userdel -rf ttnmon
     rm /etc/systemd/system/TTNmon-Gateway-Stats.service
     systemctl daemon-reload
     if [ $retVal -ne 0 ]; then #Check if rollback fixed problem
-      echo "Whoops, systemd reload after rolling back failed. You might have serious problems now which I can't solve. Sorry."
+      printf "Whoops, systemd reload after rolling back failed. You might have serious problems now which I can't solve. Sorry."
       exit
     else
-      echo "Mhhh. Rollback and systemd reload fixed the issue. Service was not installed successfully. However TTNmon Gateway Stats was successfully installed and can be started using\n   python3 /opt/TTNmon-Gateway-Stats/ttnmon_forwarder.py\nI'm sorry I can't suppprt you by creating a systemd service."
+      printf "Mhhh. Rollback and systemd reload fixed the issue. Service was not installed successfully. However TTNmon Gateway Stats was successfully installed and can be started using\n   python3 /opt/TTNmon-Gateway-Stats/ttnmon_forwarder.py\nI'm sorry I can't suppprt you by creating a systemd service."
     fi
   else #service installation worked. Let's start and/or enable it...
-    echo "Done.\n"
+    printf "Done.\n"
 
-    echo "Do you want to enable autostart for TTNmon Gateway Stats?"
+    printf "Do you want to enable autostart for TTNmon Gateway Stats?"
     read -r -p "Enable autostart? [y/N] " response
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
     then
       systemctl enable TTNmon-Gateway-Stats.service
       if [ $retVal -ne 0 ]; then #Check if enable worked
-        echo "Whoops, that failed. Please have a look for TTNmon-Gateway-Stats.service. Exiting."
+        printf "Whoops, that failed. Please have a look for TTNmon-Gateway-Stats.service. Exiting."
         exit
       else
-        echo "Done.\n"
+        printf "Done.\n"
       fi
     else
-        echo "Okay, it's up to you!\n"
+        printf "Okay, it's up to you!\n"
     fi
 
-    echo "Do you want to start TTNmon Gateway Stats?"
+    printf "Do you want to start TTNmon Gateway Stats?"
     read -r -p "Enable autostart? [y/N] " response
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
     then
       systemctl start TTNmon-Gateway-Stats.service
-      echo "Done.\n"
+      printf "Done.\n"
     else
-        echo "Okay, it's up to you!"
+        printf "Okay, it's up to you!"
     fi
   fi
 else
-  echo "Okay, it's up to you!\n"
+  printf "Okay, it's up to you!\n"
 fi
 
-echo "Installation was successful. Have a nice day and thank you for sharing your data.\n"
+printf "Installation was successful. Have a nice day and thank you for sharing your data.\n"
