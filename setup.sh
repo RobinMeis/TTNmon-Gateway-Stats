@@ -126,7 +126,7 @@ else
 fi
 
 #Configure local forwarder automagically
-printf "Do you want to configure your local forwarder automatically? This does only work for /opt/ttn-forwarder. A backup of your current configuration will be created\n"
+printf "Do you want to configure your local forwarder automatically? This does only work for /opt/ttn-gateway. A backup of your current configuration will be created\n"
 read -r -p "Configure forwarder? [Y/n] " response
 if [[ "$response" =~ ^([nN][eE][sS]|[nN])+$ ]]
 then
