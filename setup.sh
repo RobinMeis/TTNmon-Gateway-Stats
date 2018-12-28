@@ -18,7 +18,7 @@ if (( $EUID != 0 )); then #If not root, try to become root
     echo "Okay, I'm currently not running as root. I will try to sudo myself. Can you enter your sudo password?"
 
      #As we can't sudo /dev/stdin, we will download script to /tmp and run from there
-    wget https://raw.githubusercontent.com/RobinMeis/TTNmon-Gateway-Stats/master/setup.sh -O /tmp/setup-ttnmon_forwarder.sh
+    wget https://raw.githubusercontent.com/RobinMeis/TTNmon-Gateway-Stats/master/setup.sh -O /tmp/setup-ttnmon_forwarder.sh --quiet
     chmod +x /tmp/setup-ttnmon_forwarder.sh
     sudo -s -- /tmp/setup-ttnmon_forwarder.sh escalated #This will only work if sudo is installed
 
