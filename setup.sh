@@ -134,7 +134,6 @@ then
     then
       systemctl start TTNmon-Gateway-Stats.service
       echo "Done.\n"
-      fi
     else
         echo "Okay, it's up to you!"
     fi
