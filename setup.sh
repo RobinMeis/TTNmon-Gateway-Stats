@@ -10,8 +10,8 @@ if [ -z "$1" ]; then #Welcome message only once, do not show on successful escal
   echo '                                              ';
   echo '                                              ';
 
-  printf "Hello, my name is TTNmon. I will guide you through the installation of the TTNmon Gateway Stats collector"
-  printf "First of all I will make sure you gave me root access"
+  echo "Hello, my name is TTNmon. I will guide you through the installation of the TTNmon Gateway Stats collector"
+  echo "First of all I will make sure you gave me root access"
 fi
 
 #As we can't sudo /dev/stdin or call read, we will download script to /tmp and run from there
@@ -19,13 +19,13 @@ rm /tmp/setup-ttnmon_forwarder.sh
 wget https://raw.githubusercontent.com/RobinMeis/TTNmon-Gateway-Stats/master/setup.sh -O /tmp/setup-ttnmon_forwarder.sh --quiet
 chmod +x /tmp/setup-ttnmon_forwarder.sh
 if (( $EUID != 0 )); then #If not root, try to become root
-    printf "Okay, I'm currently not running as root. I will try to sudo myself. Can you enter your sudo password?"
+    echo "Okay, I'm currently not running as root. I will try to sudo myself. Can you enter your sudo password?"
 
     sudo -s -- /tmp/setup-ttnmon_forwarder.sh escalated #This will only work if sudo is installed
 
     retVal=$?
     if [ $retVal -ne 0 ]; then #Check if sudo worked
-      printf "Oh, that's bad. sudo failed. Please start me with root permissions!"
+      echo "Oh, that's bad. sudo failed. Please start me with root permissions!"
     fi
 
     exit
@@ -34,21 +34,21 @@ elif [ -z "$1" ]; then
   exit
 fi
 
-printf "Great, I got root! Now we will perform a quick setup"
+echo "Great, I got root! Now we will perform a quick setup"
 
 #Install git, python3 and python3-requests
 printf "I will install git, python3 and python3-requests. Please be patient."
 apt install --assume-yes git python3 python3-requests
 retVal=$?
 if [ $retVal -ne 0 ]; then #Check if apt worked
-  printf "Whoops, that failed. Are on Debian/Raspbian? Exiting."
+  echo "Whoops, that failed. Are on Debian/Raspbian? Exiting."
   exit
 fi
 printf "Done.\n"
 
 printf "Do you want to use the beta branch? Keep in mind that beta branches might break on update. Do not use for unattended installations!\n"
 read -r -p "Use beta branch? [y/N] " response
-printf "Going to clone TTNmon into /opt"
+echo "Going to clone TTNmon into /opt"
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
 then
   git clone https://github.com/RobinMeis/TTNmon-Gateway-Stats.git --branch beta /opt/TTNmon-Gateway-Stats
@@ -58,7 +58,7 @@ fi
 
 retVal=$?
 if [ $retVal -ne 0 ]; then #Check if clone worked
-  printf "Whoops, that failed. Exiting."
+  echo "Whoops, that failed. Exiting."
   exit
 else
   printf "Done.\n"
@@ -78,7 +78,7 @@ else
   fi
 
   #Create ttnmon user
-  printf "Creating and configuring user"
+  echo "Creating and configuring user"
   useradd -M -N -r -s /bin/false ttnmon
   if [ $retVal -ne 0 ]; then #Check if creating user worked
     printf "Mhhh. Creating user ttnmon failed. Service was not installed successfully. However TTNmon Gateway Stats was successfully installed and can be started using\n   python3 /opt/TTNmon-Gateway-Stats/ttnmon_forwarder.py\nI'm sorry I can't suppprt you by creating a systemd service."
@@ -88,7 +88,7 @@ else
   #Reloading systemctl
   systemctl daemon-reload
   if [ $retVal -ne 0 ]; then #Check if reload worked. If not undo all changes related to systemd
-    printf "Whoops, reloading systemd failed. I will rollback."
+    echo "Whoops, reloading systemd failed. I will rollback."
     userdel -rf ttnmon
     rm /etc/systemd/system/TTNmon-Gateway-Stats.service
     systemctl daemon-reload
@@ -109,14 +109,14 @@ else
     else
       systemctl enable TTNmon-Gateway-Stats.service
       if [ $retVal -ne 0 ]; then #Check if enable worked
-        printf "Whoops, that failed. Please have a look for TTNmon-Gateway-Stats.service. Exiting."
+        echo "Whoops, that failed. Please have a look for TTNmon-Gateway-Stats.service. Exiting."
         exit
       else
         printf "Done.\n"
       fi
     fi
 
-    printf "Do you want to start TTNmon Gateway Stats now?"
+    echo "Do you want to start TTNmon Gateway Stats now?"
     read -r -p "Start TTNmon Gateway Stats? [Y/n] " response
     if [[ "$response" =~ ^([nN][eE][sS]|[nN])+$ ]]
     then
