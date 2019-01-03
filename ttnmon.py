@@ -16,6 +16,7 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
 
     def add(self, pkt): #Adds a packet for uploading
         if pkt.type == "JOIN" or pkt.type == "UPLINK":
+            print("Got new packet")
             self.packets.put(pkt)
 
     def startThread(self): #Start the background task
@@ -38,14 +39,17 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
                     toUpload.append(self.packets.get())
 
                 if (self.upload(toUpload) == False): #Try upload, if fails restore packets
-                    print ("we have to restore")
+                    print ("Upload failed. We have to restore")
                     for pkt in toUpload:
                         self.packets.put(pkt)
+                else:
+                    print("Upload success")
 
 
             slept += 1
 
     def upload(self, packets):
+        print("Starting upload")
         if len(packets) > 0:
             data = {}
             data["version"] = self.version
@@ -85,4 +89,6 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
                     return True
                 else:
                     return False
+        else:
+            print("Skipping upload, no packets received")
         return True
