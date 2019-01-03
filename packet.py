@@ -17,7 +17,7 @@ class packet:
         self.protocol_version = int(data[0])
         self.random_token = data[1:3]
         self.identifier = data[3]
-        self.gateway_addr = data[4:12].hex()
+        self.gateway_addr = ByteToHex(data[4:12])
         self.gateway_id = "eui-%s" % (self.gateway_addr,)
         self.airtime = None
 
@@ -25,7 +25,7 @@ class packet:
 
         try:
             self.payload = base64.b64decode(self.json["rxpk"][0]["data"])
-            self.dev_addr = self.reverseBytes(self.payload[1:5]).hex()
+            self.dev_addr = ByteToHex(self.reverseBytes(self.payload[1:5]))
             self.payload_size = self.json["rxpk"][0]["size"]
             self.frequency = self.json["rxpk"][0]["freq"]
             self.modulation = self.json["rxpk"][0]["modu"]
@@ -52,9 +52,12 @@ class packet:
         self.calcAirtime()
         if (self.payload[0] == packet.JOIN):
             self.type = "JOIN"
-            self.deveui = self.reverseBytes(self.payload[9:17]).hex()
+            self.deveui = ByteToHex(self.reverseBytes(self.payload[9:17]))
         elif (self.payload[0] == packet.UPLINK):
             self.type = "UPLINK"
+
+    def ByteToHex( byte ):
+        return ''.join( [ "%02X " % ord( x ) for x in byte.decode('UTF-8') ] ).replace(" ", "")
 
     def calcAirtime(self):
         tsym = (pow(2,self.SF) / (self.BW * 1000)) * 1000
