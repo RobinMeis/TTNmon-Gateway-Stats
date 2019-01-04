@@ -56,8 +56,8 @@ class packet:
         elif (self.payload[0] == packet.UPLINK):
             self.type = "UPLINK"
 
-    def ByteToHex( byte ):
-        return ''.join( [ "%02X " % ord( x ) for x in byte.decode('UTF-8') ] ).replace(" ", "")
+    def ByteToHex(self, byte):
+        return ''.join(["%02X " % ord( x ) for x in byte.decode('UTF-8')]).replace(" ", "")
 
     def calcAirtime(self):
         tsym = (pow(2,self.SF) / (self.BW * 1000)) * 1000
