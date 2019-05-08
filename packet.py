@@ -50,11 +50,9 @@ class packet:
         self.SF = int(dr[0][0])
         self.BW = int(dr[0][1])
         self.calcAirtime()
-        if (self.payload[0] == packet.JOIN):
-            self.type = "JOIN"
+        self.type = self.payload[0]
+        if (self.type == packet.JOIN):
             self.deveui = self.reverseBytes(self.payload[9:17]).hex()
-        elif (self.payload[0] == packet.UPLINK):
-            self.type = "UPLINK"
 
     def calcAirtime(self):
         tsym = (pow(2,self.SF) / (self.BW * 1000)) * 1000

@@ -15,9 +15,8 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
         self.mailto = mailto
 
     def add(self, pkt): #Adds a packet for uploading
-        if pkt.type == "JOIN" or pkt.type == "UPLINK":
-            print("Got new packet")
-            self.packets.put(pkt)
+        print("Got new packet")
+        self.packets.put(pkt)
 
     def startThread(self): #Start the background task
         self.runThread = True
