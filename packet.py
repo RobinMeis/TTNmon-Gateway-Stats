@@ -57,7 +57,7 @@ class packet:
         elif (self.payload[0] == packet.UPLINK):
             self.type = "UPLINK"
 
-    def ByteToHex(self, byte):
+    def ByteToHex(self, byte): #Legacy for Python3.3 support
         return codecs.getencoder('hex')(byte)[0]
 
     def calcAirtime(self):
