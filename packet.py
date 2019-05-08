@@ -2,6 +2,7 @@ import json
 import base64
 import re
 import math
+import codecs
 
 class packet:
     JOIN = 0x00
@@ -57,7 +58,7 @@ class packet:
             self.type = "UPLINK"
 
     def ByteToHex(self, byte):
-        return ''.join(["%02X " % ord( x ) for x in byte.decode('UTF-8')]).replace(" ", "")
+        return codecs.getencoder('hex')(byte)[0]
 
     def calcAirtime(self):
         tsym = (pow(2,self.SF) / (self.BW * 1000)) * 1000
