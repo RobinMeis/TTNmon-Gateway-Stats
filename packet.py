@@ -44,6 +44,7 @@ class packet:
             self.ack = bool(self.fcrtl & 0x20)
             self.fport = int.from_bytes(self.payload[8:9], byteorder='big')
             self.deveui = None
+            self.type = self.payload[0]
         except KeyError:
             return
 
@@ -51,11 +52,10 @@ class packet:
         self.SF = int(dr[0][0])
         self.BW = int(dr[0][1])
         self.calcAirtime()
-        if (self.payload[0] == packet.JOIN):
-            self.type = "JOIN"
+        if (self.type == packet.JOIN):
             self.deveui = self.ByteToHex(self.reverseBytes(self.payload[9:17]))
-        elif (self.payload[0] == packet.UPLINK):
-            self.type = "UPLINK"
+        elif (self.type == packet.UPLINK):
+            pass
 
     def ByteToHex(self, byte): #Legacy for Python3.3 support
         return codecs.getencoder('hex')(byte)[0].decode("UTF-8")
