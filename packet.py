@@ -58,7 +58,7 @@ class packet:
             self.type = "UPLINK"
 
     def ByteToHex(self, byte): #Legacy for Python3.3 support
-        return codecs.getencoder('hex')(byte)[0]
+        return codecs.getencoder('hex')(byte)[0].decode("UTF-8")
 
     def calcAirtime(self):
         tsym = (pow(2,self.SF) / (self.BW * 1000)) * 1000
