@@ -54,29 +54,7 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
             data["mailto"] = self.mailto
             data["pkts"] = []
             for pkt in packets:
-                data["pkts"].append ({
-                    "type": pkt.type,
-                    "dev_addr": pkt.dev_addr,
-                    "payload_size": pkt.payload_size,
-                    "frequency": pkt.frequency,
-                    "modulation": pkt.modulation,
-                    "snr": pkt.snr,
-                    "time": pkt.time,
-                    "channel": pkt.channel,
-                    "rssi": pkt.rssi,
-                    "deveui": pkt.deveui,
-                    "cr_k": pkt.cr_k,
-                    "cr_n": pkt.cr_n,
-                    "adr": pkt.adr,
-                    "ack": pkt.ack,
-                    "SF": pkt.SF,
-                    "BW": pkt.BW,
-                    "fport": pkt.fport,
-                    "airtime": pkt.airtime,
-                    "gtw_addr": pkt.gateway_addr,
-                    "gtw_id": pkt.gateway_id,
-                    "fcount": pkt.fcount
-                })
+                data["pkts"].append (pkt)
 
             try:
                 response = requests.post(self.url, json = data)
