@@ -11,7 +11,7 @@ class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
         self.packets = queue.Queue()
         self.thread = None
         self.runThread = False
-        self.version = "0.1"
+        self.version = "0.2-dev"
         self.mailto = mailto
 
     def add(self, pkt): #Adds a packet for uploading
