@@ -5,7 +5,7 @@ import queue
 import requests
 
 class ttnmon: #Class for collecting and uploading gateway stats to TTNmon
-    def __init__(self, mailto, upload_interval=60, url="https://api.ttnmon.meis.space/gateways/ttnmon_forwarder/"):
+    def __init__(self, mailto, upload_interval=60, url="https://api.ttnmon.meis.space/gateways/ttnmon_forwarder/new.php"):
         self.upload_interval = upload_interval
         self.url = url
         self.packets = queue.Queue()
